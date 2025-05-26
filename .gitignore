@@ -1,0 +1,44 @@
+# ===============================
+# 🌐 Node + React Native Project
+# ===============================
+
+# Node Modules
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.idea/
+.vscode/
+
+# React Native
+android/app/build/
+ios/Pods/
+ios/build/
+*.keystore
+*.gradle
+
+# Babel
+.babelrc
+babel.config.js
+
+# Expo
+.expo/
+.expo-shared/
+
+# Cache & temp
+.env
+*.log
+*.tmp
+
+# Metro
+packager-info.json
+.expo-packager-cache/
+.expo-web-debugger/
