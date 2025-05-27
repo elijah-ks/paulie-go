@@ -1,61 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
-import Voice from '@react-native-voice/voice';
+import * as Speech from 'expo-speech';
 
 export default function App() {
-  const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState('');
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    Voice.onSpeechStart = () => console.log('🎙️ Listening...');
-    Voice.onSpeechEnd = () => console.log('🛑 Stopped listening');
-    Voice.onSpeechResults = (e) => {
-      setTranscript(e.value[0]);
-    };
-    Voice.onSpeechError = (e) => {
-      setError(e.error.message);
-    };
-
-    return () => {
-      Voice.destroy().then(Voice.removeAllListeners);
-    };
-  }, []);
-
-  const startListening = async () => {
-    try {
-      setTranscript('');
-      setError(null);
-      await Voice.start('en-US');
-      setIsListening(true);
-    } catch (e) {
-      console.error('Start error:', e);
-    }
-  };
-
-  const stopListening = async () => {
-    try {
-      await Voice.stop();
-      setIsListening(false);
-    } catch (e) {
-      console.error('Stop error:', e);
-    }
+  const speak = () => {
+    Speech.speak("Hey! I'm Paulie. Let's hit the road!");
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.heading}>🎧 Paulie Go - Voice Test</Text>
+      <Text style={styles.heading}>🚗 Paulie Go - Talking Mode</Text>
 
       <View style={styles.box}>
-        <Text style={styles.label}>Transcript:</Text>
-        <Text style={styles.transcript}>{transcript || 'Say something...'}</Text>
-        {error && <Text style={styles.error}>⚠️ {error}</Text>}
+        <Text style={styles.label}>Press the button to hear Paulie speak:</Text>
       </View>
 
-      <Button
-        title={isListening ? '🛑 Stop Listening' : '🎤 Start Listening'}
-        onPress={isListening ? stopListening : startListening}
-      />
+      <Button title="🎤 Talk to Me!" onPress={speak} />
     </SafeAreaView>
   );
 }
@@ -65,6 +25,4 @@ const styles = StyleSheet.create({
   heading: { fontSize: 24, textAlign: 'center', marginBottom: 20 },
   box: { marginBottom: 30, padding: 16, borderRadius: 8, backgroundColor: '#f2f2f2' },
   label: { fontWeight: 'bold', fontSize: 16 },
-  transcript: { fontSize: 18, marginTop: 8 },
-  error: { color: 'red', marginTop: 8 },
 });
